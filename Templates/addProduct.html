@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% if product != "" %}
+        <h3>Ürünü Düzenle</h3>
+    {% else %}
+        <h3>Ürün Ekle</h3>
+    {% endif %}
+    {% from "includes/formhelp.html" import render_field %}
+    <form method="post" >
+        {% if product != "" %}
+            {{ render_field(form.name, class="form-control-lg", value=product.Name) }}<br>
+            {{ render_field(form.color, class="form-control-lg", value=product.Color) }}<br>
+            {{ render_field(form.code, class="form-control-lg", value=product.Code) }}<br>
+            {{ render_field(form.category, class="form-control-lg", value=product.Category) }}<br>
+            {{ render_field(form.description, class="form-control-lg", value=product.Description) }}<br>
+            {{ render_field(form.photoPath, class="form-control-lg", type="file") }}<br>
+            <button type="submit" class="btn btn-success">Güncelle</button>
+        {% else %}
+            {{ render_field(form.name, class="form-control-lg") }}<br>
+            {{ render_field(form.color, class="form-control-lg") }}<br>
+            {{ render_field(form.code, class="form-control-lg") }}<br>
+            {{ render_field(form.category, class="form-control-lg") }}<br>
+            {{ render_field(form.description, class="form-control-lg") }}<br>
+            {{ render_field(form.photoPath, class="form-control-lg", type="file") }}<br>
+            <button type="submit" class="btn btn-success">Kaydet</button>
+        {% endif %}
+    </form>
+{% endblock  %}

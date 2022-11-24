@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>VENUS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    </head>
+    <body>
+        {% include "includes/navbar.html" %}        
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+        <script src="https://cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
+               
+        <div class="container">
+            {%include "includes/messages.html" %}
+            {% block body %}
+
+            {% endblock body %}
+
+            <div class="card-deck">
+                {% for prod in productList %}
+                    <div class="card"  style="float:left; position: relative; width: 310px; height: 500px; padding: 10px; margin:50px 0px 50px 50px; background: #FFF8E1; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                        <img src="{{prod.ProductPhotos.ImagePath}}" width="200" height="200"/>
+                        <hr style="background:#333; height: 2px;">
+                        {% if prod.Products.Name != "" %}
+                            <div class="card-body">
+                                <h3 class="card-title" >{{prod.Products.Name}}</h3>
+                            </div>
+                            <hr style="background:#333; height: 2px;">
+                        {% endif %}
+                        <div class="card-footer">
+                            {% if prod.Products.Code != "" %}
+                                <h6 class="card-title" >Ürün Kodu: {{prod.Products.Code}}</h6>
+                            {% endif %}
+                            {% if prod.Products.Color != "" %}
+                                <h6 class="card-text">Renk: {{prod.Products.Color}}</h6>
+                            {% endif %}
+                        </div> 
+                        {% if prod.Products.Code != "" and prod.Products.Color != ""  %}
+                            <hr style="background:#333; height: 2px;">
+                        {% endif %}
+                        <div class="card-footer">                            
+                            {% if prod.Products.Description != "" %}
+                                <h6 class="card-text">{{prod.Products.Description}}</h6>
+                                <hr style="background:#333; height: 2px;">
+                            {% endif %}
+                        </div>
+                        {% if session["role_id"] == 1 %}
+                            <div class="card-link" style="bottom: 0; position: absolute; right: 0;">
+                                <small class="text-muted">Last updated: {{prod.Products.UpdateDate}}</small>
+                                <a href="/editproduct/{{prod.Products.ID}}" type="submit" class="btn btn-danger" style="padding: 2px 8px; margin: 5px; margin-left: 86px; height: 28px;">Düzenle</a>
+                            </div>
+                        {% endif %}
+
+                        {% if session["role_id"] == 2 %}
+                            {% if userFavorites %}
+                                <div class="card-link" style="bottom: 0; position: absolute; right: 0">
+                                    <a href="/removefavorites/{{prod.Products.ID}}" type="submit" class="btn btn-danger" style="padding: 2px 8px; margin: 5px; margin-left: 86px; height: 28px;">Favorilerden Kaldır</a>
+                                </div>
+                            {% else %}                            
+                                <div class="card-link" style="bottom: 0; position: absolute; right: 0">
+                                    <a href="/addfavorites/{{prod.Products.ID}}" type="submit" class="btn btn-danger" style="padding: 2px 8px; margin: 5px; margin-left: 86px; height: 28px;">Favorilere Ekle</a>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <!--<div class="card-link" style="bottom: 0; position: absolute; margin: 5px; left: 0">
+                            <a href="#" type="submit" class="btn btn-danger">Ürün Detayları</a>
+                        </div>-->
+                    </div>                
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+            CKEDITOR.replace( 'content', {allowedContent : true} );
+        </script>
+    </body>
+</html>

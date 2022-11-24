@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="text-center">
+    <img src="{{ url_for('static', filename='images/venus_text1.png') }}"/>
+    {% if session["logged_in"] %}
+        <p>Hoşgeldin {{session["name"]}} {{session["surname"]}}</p>
+    {% else %}
+        <p>En güncel kampanyalardan haberdar olmak için hemen üye olun!</p>
+    {% endif %}
+
+    <p>Venus bir ürün kataloğu sitesidir. Venus markasına ait en modern, en yeni ürünleri buradan inceleyebilirsiniz.</p>
+</div>
+{% endblock body %}

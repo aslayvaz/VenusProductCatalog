@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div>
+        <h3>Adminler</h3>
+        <hr>
+        {% from "includes/formhelp.html" import render_field %}
+
+        <table class="table">
+            {% for adm in admins %}
+                <tr>
+                    <td style="width:250px;"> {{adm.Name}} {{adm.Surname}}</td>
+                    <td style="width:300px; float:left;"><a href="/deleteAdmin/{{adm.ID}}" type="submit" class="btn btn-danger">Sil</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    
+        <form method="post">
+            {{ render_field(form.name ,class="form-control-lg") }}
+            <br>
+            <button type="submit" class="btn btn-success">Admin Yap</button>
+        </form>
+    </div>
+{% endblock body %}
